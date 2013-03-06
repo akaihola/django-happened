@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ STATIC_URL }}happened/css/timeline.css">
+        <style>
+            html, body {
+                margin: 0;
+                height: 99.9%;
+            }
+            #timeline {
+                width: 99.9%;
+                height: 99.9%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="timeline"></div>
+
+        <script type="text/javascript"
+                src="{{ STATIC_URL }}happened/js/timeline-min.js">
+        </script>
+        <script type="text/javascript"
+                src="/happened/data.js">
+        </script>
+        <script type="text/javascript"
+                src="{{ STATIC_URL }}happened/js/timeline-draw.js">
+        </script>
+    </body>
+</html>
