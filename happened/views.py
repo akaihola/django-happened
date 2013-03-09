@@ -33,7 +33,7 @@ class JavaScriptSerializer(Serializer):
         return {'start': obj.start,
                 'end': obj.end,
                 'content': obj.title,
-                'group': 'group1',
+                'group': obj.group,
                 'className': 'className'}
 
 serializer = JavaScriptSerializer()
