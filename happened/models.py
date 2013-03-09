@@ -3,9 +3,9 @@ from django.db import models
 
 class Event(models.Model):
     start = models.DateTimeField()
-    start_plusminus = models.IntegerField(default=0)
-    end = models.DateTimeField()
-    end_plusminus = models.IntegerField(default=0)
+    start_resolution = models.IntegerField(default=0)
+    end = models.DateTimeField(null=True, blank=True)
+    end_resolution = models.IntegerField(default=0)
     title = models.CharField(max_length=1000)
     description = models.TextField(blank=True)
 
