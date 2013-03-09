@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Event(models.Model):
+    group = models.CharField(max_length=30, blank=True)
     start = models.DateTimeField()
     start_resolution = models.IntegerField(default=0)
     end = models.DateTimeField(null=True, blank=True)
