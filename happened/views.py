@@ -30,9 +30,20 @@ class JavaScriptSerializer(Serializer):
     internal_use_only = False
 
     def get_dump_object(self, obj):
+        if obj.description:
+            tooltip = u' title="{obj.description}"'.format(obj=obj)
+        else:
+            tooltip = u''
+        if obj.urls.count():
+            content = (u'<a href="{url}"{tooltip}>{title}</a>'
+                       .format(url=obj.urls.all()[0],
+                               title=obj.title,
+                               tooltip=tooltip))
+        else:
+            content = obj.title
         return {'start': obj.start,
                 'end': obj.end,
-                'content': obj.title,
+                'content': content,
                 'group': obj.group,
                 'className': 'className'}
 
@@ -44,7 +55,7 @@ class Data(TemplateView):
         # pylint: disable=E1101
         #         Instance of <class> has no <member>
 
-        events = Event.objects.order_by('start')
+        events = Event.objects.order_by('start').prefetch_related('urls')
         json = serializer.serialize(events, default=default)
         expr = u'data = {0};'.format(json)
         return HttpResponse(expr, content_type='application/javascript')

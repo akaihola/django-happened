@@ -15,7 +15,7 @@ class Event(models.Model):
 
 
 class Url(models.Model):
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, related_name='urls')
     order = models.IntegerField(default=1)
     url = models.URLField()
 

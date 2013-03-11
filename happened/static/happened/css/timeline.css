@@ -186,3 +186,9 @@ div.timeline-event-range div.timeline-event-content {
     border-radius: 5px;
     -moz-border-radius: 5px; /* For Firefox 3.6 and older */
 }
+
+div.timeline-event-content a {
+    text-decoration: none;
+    border-bottom: 1px dotted #aaa;
+    color: #000;
+}
