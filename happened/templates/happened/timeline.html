@@ -14,9 +14,12 @@
                 height: 99.9%;
             }
         </style>
+        {% block extrahead %}{% endblock %}
     </head>
     <body>
+        {% block header %}{% endblock %}
         <div id="timeline"></div>
+        {% block footer %}{% endblock %}
 
         <script type="text/javascript"
                 src="{{ STATIC_URL }}happened/js/timeline-min.js">
