@@ -44,7 +44,7 @@ class Data(TemplateView):
         # pylint: disable=E1101
         #         Instance of <class> has no <member>
 
-        events = Event.objects.all()
+        events = Event.objects.order_by('start')
         json = serializer.serialize(events, default=default)
         expr = u'data = {0};'.format(json)
         return HttpResponse(expr, content_type='application/javascript')

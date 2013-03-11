@@ -167,3 +167,22 @@ div.timeline-navigation-move-left {
 div.timeline-navigation-move-right {
     background: url('img/16/moveright.png') no-repeat center;
 }
+
+
+/* django-happened customizations */
+
+div.timeline-event-range {
+    height: 30px;
+}
+
+div.timeline-event-range div.timeline-event-content {
+    /* width: 500px; */
+    position: absolute;
+    background: white;
+    overflow: visible;
+    padding: 3px;
+    top: -4px;
+    border: solid #888 1px;
+    border-radius: 5px;
+    -moz-border-radius: 5px; /* For Firefox 3.6 and older */
+}
