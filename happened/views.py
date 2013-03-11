@@ -11,7 +11,7 @@ class Timeline(TemplateView):
     template_name = 'happened/timeline.html'
 
 
-def default(o):
+def encode_datetime(o):
     if isinstance(o, datetime.datetime):
         return int(1000 * time.mktime(o.utctimetuple()))
     elif isinstance(o, datetime.date):
@@ -48,6 +48,8 @@ class JavaScriptSerializer(Serializer):
                 'className': 'className'}
 
 serializer = JavaScriptSerializer()
+jsize = lambda value: serializer.serialize(value, default=encode_datetime)
+twoyears = datetime.timedelta(days=2 * 365)
 
 
 class Data(TemplateView):
@@ -56,6 +58,8 @@ class Data(TemplateView):
         #         Instance of <class> has no <member>
 
         events = Event.objects.order_by('start').prefetch_related('urls')
-        json = serializer.serialize(events, default=default)
-        expr = u'data = {0};'.format(json)
+        expr = u'data={data};min={min};max={max};'.format(
+            data=jsize(events),
+            min=encode_datetime(events[0].start - twoyears),
+            max=encode_datetime(datetime.datetime.utcnow() + twoyears))
         return HttpResponse(expr, content_type='application/javascript')

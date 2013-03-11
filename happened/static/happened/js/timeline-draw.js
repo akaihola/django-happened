@@ -3,7 +3,9 @@
                height: "99%",
                style: "box",
                box: {align: "left"},
-               cluster: true};
+               cluster: true,
+               min: min,
+               max: max};
 
     var timeline = new links.Timeline(
         document.getElementById('timeline'));
