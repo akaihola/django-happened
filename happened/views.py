@@ -57,9 +57,13 @@ class Data(TemplateView):
         # pylint: disable=E1101
         #         Instance of <class> has no <member>
 
-        events = Event.objects.order_by('start').prefetch_related('urls')
-        expr = u'data={data};min={min};max={max};'.format(
+        events = (Event.objects
+                  .order_by('group', 'start')
+                  .prefetch_related('urls'))
+        now = datetime.datetime.utcnow()
+        expr = u'data={data};min={min};now={now};max={max};'.format(
             data=jsize(events),
             min=encode_datetime(events[0].start - twoyears),
-            max=encode_datetime(datetime.datetime.utcnow() + twoyears))
+            now=encode_datetime(now),
+            max=encode_datetime(now + twoyears))
         return HttpResponse(expr, content_type='application/javascript')
