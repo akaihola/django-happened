@@ -34,13 +34,14 @@ class JavaScriptSerializer(Serializer):
             tooltip = u' title="{obj.description}"'.format(obj=obj)
         else:
             tooltip = u''
-        if obj.urls.count():
-            content = (u'<a href="{url}"{tooltip}>{title}</a>'
-                       .format(url=obj.urls.all()[0],
-                               title=obj.title,
-                               tooltip=tooltip))
-        else:
-            content = obj.title
+        links = u''.join(u'<li><a href="{link.url}">{link.url}</a></li>'
+                         .format(link=link)
+                         for link in obj.urls.all())
+        content = (
+            u'<h1>{obj.title}</h1>'
+            u'<p>{obj.description}</p>'
+            u'<ul>{links}</ul>'
+            .format(obj=obj, links=links))
         return {'start': obj.start,
                 'end': obj.end,
                 'content': content,

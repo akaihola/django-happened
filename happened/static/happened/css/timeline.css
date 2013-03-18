@@ -192,3 +192,42 @@ div.timeline-event-content a {
     border-bottom: 1px dotted #aaa;
     color: #000;
 }
+
+div.timeline-event-content h1 {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+}
+
+div.timeline-event-content p,
+div.timeline-event-content ul {
+    display: none;
+}
+
+#popup {
+    position: absolute;
+    display: none;
+    border: solid 1px #ffc200;
+    background: #fff785;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    padding: 3px;
+    z-index: 998;
+}
+
+#popup ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#popup p {
+    list-style-type: none;
+    margin: 0;
+}
+
+div.timeline-event-selected {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

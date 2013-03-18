@@ -19,6 +19,7 @@
     <body>
         {% block header %}{% endblock %}
         <div id="timeline"></div>
+        <div id="popup"></div>
         {% block footer %}{% endblock %}
 
         <script type="text/javascript"
@@ -28,8 +29,19 @@
                 src="/happened/data.js">
         </script>
         {% block pre-draw %}{% endblock %}
+        <script>
+            document.write(
+                '<script src={{ STATIC_URL }}/happened/js/'+('__proto__' in {}?'zepto':'jquery')+'.min.js><\/script>')
+        </script>
+
         <script type="text/javascript"
                 src="{{ STATIC_URL }}happened/js/timeline-draw.js">
         </script>
+
+        {% if user.is_staff %}
+            <script type="text/javascript"
+                    src="{{ STATIC_URL }}happened/js/timeline-admin.js">
+            </script>
+        {% endif %}
     </body>
 </html>
