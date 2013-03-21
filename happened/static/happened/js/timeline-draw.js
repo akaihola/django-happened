@@ -1,5 +1,5 @@
 (function() {
-  var options, originalUnselectItem, popup, timeline;
+  var onSelect, options, originalUnselectItem, popup, timeline;
 
   options = {
     width: "100%",
@@ -22,21 +22,25 @@
 
   timeline.draw(data, options);
 
-  $('div.timeline-event').click(function() {
-    var event, eventOffset;
-    event = $(this);
-    popup.empty().insertBefore(event);
+  onSelect = function(object, event, properties) {
+    var $event, eventOffset;
+    $event = $(this);
+    popup.empty().insertBefore($event);
     popup.append($('p', this).clone());
     popup.append($('ul', this).clone());
-    eventOffset = event.offset();
+    eventOffset = $event.offset();
     popup.css({
-      'left': event.css('left')
+      'left': $event.css('left')
     });
     popup.show();
     return popup.css({
-      'top': event.css('top').slice(0, -2) - popup.offset().height + 2 + 'px',
+      'top': $event.css('top').slice(0, -2) - popup.offset().height + 2 + 'px',
       'min-width': eventOffset.width - 6 + 'px'
     });
+  };
+
+  links.events.addListener(timeline, 'select', function(object, event, properties) {
+    return onSelect.apply(this, object, event, properties);
   });
 
   originalUnselectItem = links.Timeline.prototype.unselectItem;
@@ -45,5 +49,9 @@
     popup.hide();
     return originalUnselectItem.apply(this, arguments);
   };
+
+  links.events.addListener(timeline, 'rangechanged', function(object, event, properties) {
+    return popup.hide();
+  });
 
 }).call(this);

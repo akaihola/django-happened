@@ -15,18 +15,23 @@ popup = $ '#popup'
 
 timeline.draw data, options
 
-$('div.timeline-event').click ->
-    event = $ this
-    popup.empty().insertBefore event
+onSelect = (object, event, properties) ->
+    $event = $ this
+    popup.empty().insertBefore $event
     popup.append $('p', this).clone()
     popup.append $('ul', this).clone()
-    eventOffset = event.offset()
+    eventOffset = $event.offset()
     popup.css
-        'left': event.css 'left'
+        'left': $event.css 'left'
     popup.show()
     popup.css
-        'top': event.css('top')[..-3] - popup.offset().height + 2 + 'px'
+        'top': $event.css('top')[..-3] - popup.offset().height + 2 + 'px'
         'min-width': eventOffset.width - 6 + 'px'
+
+links.events.addListener timeline, 'select',
+    (object, event, properties) -> onSelect.apply(this, object, event, properties)
+
+# $('div.timeline-event').on 'click', onSelect
 
 originalUnselectItem = links.Timeline.prototype.unselectItem
 
@@ -34,3 +39,6 @@ links.Timeline.prototype.unselectItem = ->
     popup.hide()
     originalUnselectItem.apply(this, arguments)
 
+links.events.addListener timeline, 'rangechanged',
+    (object, event, properties) -> popup.hide()
+    
